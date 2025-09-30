@@ -1,0 +1,18 @@
+import { DeleteResult, UpdateResult } from "typeorm";
+import { CreateUserDTO } from "../dtos/create-user.dto";
+import { FindAllUsersDTO } from "../dtos/find-all-users.dto";
+import { UserEntity } from "./user.entity";
+import { ResetPasswordUserDTO } from "../dtos/reset-password-user.dto";
+import { FindOneUserDTO } from "../dtos/find-one-user.dto";
+
+export interface IUserRepository {
+    create(createUser: CreateUserDTO): Promise<UserEntity>;
+    findAll(params: FindAllUsersDTO): Promise<UserEntity[]>;
+    findOne(findOneUser: FindOneUserDTO): Promise<UserEntity | null>;
+    findPassword(id: number): Promise<{senha: string}>;
+    update(id: number, paramsUser: FindAllUsersDTO): Promise<void>;
+    disable(id: number): Promise<DeleteResult>;
+    able(id: number): Promise<UpdateResult>;
+    resetPassword(resetPasswordUser: ResetPasswordUserDTO): Promise<UpdateResult>
+    delete(id: number): Promise<DeleteResult>
+}
