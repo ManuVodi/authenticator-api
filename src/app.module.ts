@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { UserModule } from './modules/user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { dirname } from 'path';
 import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
