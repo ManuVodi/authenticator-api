@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import { forwardRef, Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { UserEntity } from "./models/user.entity";
 import { CreateUserUseCase } from "./use-cases/create-user.use-case";
@@ -11,10 +11,14 @@ import { AbleUserUseCase } from "./use-cases/able-user.use-case";
 import { ResetPasswordUserUseCase } from "./use-cases/reset-password-user.use-case";
 import { DeleteUserUseCase } from "./use-cases/delete-user.use-case";
 import { FindPasswordUserUseCase } from "./use-cases/find-password-user.use-case";
+import { AuthModule } from "../auth/auth.module";
+import { AuthGuard } from "../auth/use-cases/auth.guard";
+import { JwtModule } from "@nestjs/jwt";
 
 @Module({
     imports: [
-        TypeOrmModule.forFeature([UserEntity])
+        TypeOrmModule.forFeature([UserEntity]),
+        forwardRef(() => AuthModule)
     ],
     controllers: [
         UserController
@@ -35,7 +39,7 @@ import { FindPasswordUserUseCase } from "./use-cases/find-password-user.use-case
     ],
     exports: [
         FindOneUserUseCase,
-        FindPasswordUserUseCase
+        FindPasswordUserUseCase,
     ]
 })
 

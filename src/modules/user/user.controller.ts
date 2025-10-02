@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Inject, Param, Patch, Post, Query } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Inject, Param, Patch, Post, Query, UseGuards } from "@nestjs/common";
 import { CreateUserDTO } from "./dtos/create-user.dto";
 import { FindAllUsersDTO } from "./dtos/find-all-users.dto";
 import { ResetPasswordUserDTO } from "./dtos/reset-password-user.dto";
@@ -11,6 +11,7 @@ import { FindAllUsersCase } from "./use-cases/find-all-users.use-case";
 import { FindOneUserUseCase } from "./use-cases/find-one-user.use-case";
 import { ResetPasswordUserUseCase } from "./use-cases/reset-password-user.use-case";
 import { FindReturnUserDTO } from "./dtos/find-return-user.dto";
+import { AuthGuard } from "../auth/use-cases/auth.guard";
 
 @Controller('user')
 export class UserController {
@@ -28,7 +29,7 @@ export class UserController {
         @Inject(ResetPasswordUserUseCase)
         private resetPasswordUserUseCase: ResetPasswordUserUseCase,
         @Inject(DeleteUserUseCase)
-        private deleteUserUseCase: DeleteUserUseCase
+        private deleteUserUseCase: DeleteUserUseCase,
     ){}
 
     @Post()
@@ -36,6 +37,7 @@ export class UserController {
         return await this.createUserUseCase.create(createUser)
     }
 
+    @UseGuards(AuthGuard)
     @Get()
     async findAll(
         @Query('email') email?: string, 
@@ -47,16 +49,19 @@ export class UserController {
         return await this.findAllUsersCase.findAll(params)
     }
 
+    @UseGuards(AuthGuard)
     @Get(':id')
     async findOne(@Param('id') id: number): Promise<FindReturnUserDTO | null> {
         return await this.findOneUserUseCase.findOne({id})
     }
 
+    @UseGuards(AuthGuard)
     @Patch('disable/:id')
     async disable(@Param('id') id: number): Promise<void>{
         return await this.disableUserUseCase.disable(id)
     }
 
+    @UseGuards(AuthGuard)
     @Patch('able/:id')
     async able(@Param('id') id: number): Promise<void>{
         return await this.ableUserUseCase.able(id)
@@ -67,6 +72,7 @@ export class UserController {
         return await this.resetPasswordUserUseCase.resetPassword(resetPasswordUser)
     }
 
+    @UseGuards(AuthGuard)
     @Delete(':id')
     async delete(@Param('id') id: number): Promise<void> {
         return this.deleteUserUseCase.delete(id)
