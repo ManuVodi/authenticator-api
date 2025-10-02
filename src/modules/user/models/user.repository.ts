@@ -73,17 +73,6 @@ export class UserEntityRepository implements IUserRepository {
             .getOne()
     }
 
-    async update(id: number, updateUser: FindAllUsersDTO): Promise<void> {
-        await this.userEntity
-            .createQueryBuilder()
-            .update()
-            .set({
-                email: updateUser.email
-            })
-            .where("id = :id", {id})
-            .execute()
-    }
-
     async disable(id: number): Promise<DeleteResult> {
         return await this.userEntity
             .createQueryBuilder()

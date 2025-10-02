@@ -1,7 +1,6 @@
-import { HttpException, Inject, Injectable, InternalServerErrorException } from "@nestjs/common";
+import { HttpException, Inject, Injectable } from "@nestjs/common";
 import { IUserRepository } from "../models/user.interface";
 import { FindAllUsersDTO } from "../dtos/find-all-users.dto";
-import { UserEntity } from "../models/user.entity";
 import { FindReturnUserDTO } from "../dtos/find-return-user.dto";
 
 @Injectable()
