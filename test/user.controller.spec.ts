@@ -9,11 +9,12 @@ import { ResetPasswordUserUseCase } from '../src/modules/user/use-cases/reset-pa
 import { DeleteUserUseCase } from '../src/modules/user/use-cases/delete-user.use-case';
 import { AuthGuard } from '../src/modules/auth/use-cases/auth.guard';
 import { JwtService } from '@nestjs/jwt';
-import { dto } from './mocks/create-dto.mock';
-import { createUser } from './mocks/create-user.mock';
+import { createDTOMock } from './mocks/create-dto.mock';
+import { user } from './mocks/user.mock';
 import { findUsers } from './mocks/find-return-users.mock';
 import { findUser } from './mocks/find-return-user.mock';
 import { resetPasswordUser } from './mocks/reset-password-user.mock';
+import { createReturnDTOMock } from './mocks/create-return-user.mock';
 
 describe('UserController', () => {
   // variáveis para armazenar as funções (com seus tipos) do módulo
@@ -36,7 +37,7 @@ describe('UserController', () => {
           provide: CreateUserUseCase,
           useValue: {
             // define que a função declarada acima (CreateUserUseCase) retornará um dado mockado do tipo CREATEUSER
-            create: jest.fn().mockResolvedValue(createUser),
+            create: jest.fn().mockResolvedValue(createReturnDTOMock),
           }
         },
         { 
@@ -111,13 +112,13 @@ describe('UserController', () => {
   it('deve criar um usuário', async () => {
 
     // simula um RESULTADO (retorno/consulta do banco de dados) com um tipo DTO
-    const result = await controller.create(dto);
+    const result = await controller.create(createDTOMock);
 
     // EXPECTATIVA que o RESULTADO seja IGUAL ao tipo CREATEUSER
-    expect(result).toEqual(createUser);
+    expect(result).toEqual(createReturnDTOMock);
 
     // EXPECTATIVA que a função CREATE seja CHAMADA com o parâmetro DTO
-    expect(createUserUseCase.create).toHaveBeenCalledWith(dto);
+    expect(createUserUseCase.create).toHaveBeenCalledWith(createDTOMock);
   });
 
   // teste para validar a função FIND ALL do controller SEM FILTRO

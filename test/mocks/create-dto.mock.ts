@@ -1,7 +1,7 @@
 import { CreateUserDTO } from "src/modules/user/dtos/create-user.dto";
 
-export const dto: CreateUserDTO = {
+export const createDTOMock: CreateUserDTO = {
       email: 'teste@email.com',
       senha: '123456',
-      nome_usuario: 'Manu',
+      nome_usuario: 'manu',
     };

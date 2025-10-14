@@ -5,7 +5,7 @@ export const findUsers: FindReturnUserDTO[] = [
     {...findUser},
     { 
         id: 2, 
-        email: 'email2@email.com', 
+        email: 'teste2@email.com', 
         nome_usuario: 'gui' 
     }
 ];
