@@ -12,6 +12,7 @@ import { FindOneUserUseCase } from "./use-cases/find-one-user.use-case";
 import { ResetPasswordUserUseCase } from "./use-cases/reset-password-user.use-case";
 import { FindReturnUserDTO } from "./dtos/find-return-user.dto";
 import { AuthGuard } from "../auth/use-cases/auth.guard";
+import { CreateReturnUserDTO } from "./dtos/create-return-user.dto";
 
 @Controller('user')
 export class UserController {
@@ -33,7 +34,7 @@ export class UserController {
     ){}
 
     @Post()
-    async create(@Body() createUser: CreateUserDTO): Promise<UserEntity> {
+    async create(@Body() createUser: CreateUserDTO): Promise<CreateReturnUserDTO> {
         return await this.createUserUseCase.create(createUser)
     }
 

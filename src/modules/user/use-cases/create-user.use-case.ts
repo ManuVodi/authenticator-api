@@ -1,9 +1,9 @@
 import { BadRequestException, HttpException, Inject, Injectable, InternalServerErrorException } from "@nestjs/common";
 import * as bcrypt from 'bcrypt';
 import { CreateUserDTO } from "../dtos/create-user.dto";
-import { UserEntity } from "../models/user.entity";
 import { IUserRepository } from "../models/user.interface";
 import { FindOneUserUseCase } from "./find-one-user.use-case";
+import { CreateReturnUserDTO } from "../dtos/create-return-user.dto";
 
 @Injectable()
 export class CreateUserUseCase {
@@ -14,7 +14,7 @@ export class CreateUserUseCase {
         private findOneUserUseCase: FindOneUserUseCase
     ){}
 
-    async create(createUser: CreateUserDTO): Promise<UserEntity>{
+    async create(createUser: CreateUserDTO): Promise<CreateReturnUserDTO>{
         try {
             const foundUserByEmail = await this.findOneUserUseCase.findOne({email: createUser.email})
             const foundUserByUserName = await this.findOneUserUseCase.findOne({nome_usuario: createUser.nome_usuario})
@@ -25,7 +25,12 @@ export class CreateUserUseCase {
                 ...createUser, 
                 senha: await bcrypt.hash(createUser.senha, salt)
             }
-            return await this.userRepository.create(cryptoUser)
+            const createdUser = await this.userRepository.create(cryptoUser)
+            const user = new CreateReturnUserDTO()
+            user.id = createdUser.id
+            user.nome_usuario = createdUser.nome_usuario
+            user.email = createdUser.email
+            return user
         }
         catch(error){
             throw new HttpException(error.message ?? 'Não foi possível cadastrar o usuário', error.status ?? 500)

@@ -16,10 +16,7 @@ export class UserEntityRepository implements IUserRepository {
     ){}
 
     async create(createUser: CreateUserDTO): Promise<UserEntity> {
-        const createdUser = await this.userEntity.save(createUser)        
-        delete createdUser.senha 
-        delete createdUser.deleted_date
-        return createdUser
+        return await this.userEntity.save(createUser)
     }
 
     async findAll(params: FindAllUsersDTO): Promise<UserEntity[]> {
