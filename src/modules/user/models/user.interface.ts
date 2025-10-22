@@ -4,11 +4,12 @@ import { FindAllUsersDTO } from "../dtos/find-all-users.dto";
 import { UserEntity } from "./user.entity";
 import { ResetPasswordUserDTO } from "../dtos/reset-password-user.dto";
 import { FindOneUserDTO } from "../dtos/find-one-user.dto";
+import { FindReturnUserDTO } from "../dtos/find-return-user.dto";
 
 export interface IUserRepository {
     create(createUser: CreateUserDTO): Promise<UserEntity>;
     findAll(params: FindAllUsersDTO): Promise<UserEntity[]>;
-    findOne(findOneUser: FindOneUserDTO): Promise<UserEntity | null>;
+    findOne(findOneUser: FindOneUserDTO): Promise<FindReturnUserDTO | null>;
     findPassword(id: number): Promise<{senha: string}>;
     disable(id: number): Promise<DeleteResult>;
     able(id: number): Promise<UpdateResult>;

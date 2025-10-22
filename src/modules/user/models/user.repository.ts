@@ -7,6 +7,7 @@ import { FindAllUsersDTO } from "../dtos/find-all-users.dto";
 import { InjectRepository } from "@nestjs/typeorm";
 import { ResetPasswordUserDTO } from "../dtos/reset-password-user.dto";
 import { FindOneUserDTO } from "../dtos/find-one-user.dto";
+import { FindReturnUserDTO } from "../dtos/find-return-user.dto";
 
 @Injectable()
 export class UserEntityRepository implements IUserRepository {
@@ -38,7 +39,7 @@ export class UserEntityRepository implements IUserRepository {
         return await query.getMany()
     }
 
-    async findOne(findOneUser: FindOneUserDTO): Promise<UserEntity | null> {
+    async findOne(findOneUser: FindOneUserDTO): Promise<FindReturnUserDTO | null> {
         const query = this.userEntity
             .createQueryBuilder('user_entity')
             .select([
