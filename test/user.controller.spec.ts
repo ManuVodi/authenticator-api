@@ -10,7 +10,6 @@ import { DeleteUserUseCase } from '../src/modules/user/use-cases/delete-user.use
 import { AuthGuard } from '../src/modules/auth/use-cases/auth.guard';
 import { JwtService } from '@nestjs/jwt';
 import { createDTOMock } from './mocks/create-dto.mock';
-import { user } from './mocks/user.mock';
 import { findUsers } from './mocks/find-return-users.mock';
 import { findUser } from './mocks/find-return-user.mock';
 import { resetPasswordUser } from './mocks/reset-password-user.mock';
