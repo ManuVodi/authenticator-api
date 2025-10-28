@@ -8,6 +8,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { ResetPasswordUserDTO } from "../dtos/reset-password-user.dto";
 import { FindOneUserDTO } from "../dtos/find-one-user.dto";
 import { FindReturnUserDTO } from "../dtos/find-return-user.dto";
+import { CreateReturnUserDTO } from "../dtos/create-return-user.dto";
 
 @Injectable()
 export class UserEntityRepository implements IUserRepository {
@@ -16,11 +17,11 @@ export class UserEntityRepository implements IUserRepository {
         private userEntity: Repository<UserEntity>
     ){}
 
-    async create(createUser: CreateUserDTO): Promise<UserEntity> {
+    async create(createUser: CreateUserDTO): Promise<CreateReturnUserDTO> {
         return await this.userEntity.save(createUser)
     }
 
-    async findAll(params: FindAllUsersDTO): Promise<UserEntity[]> {
+    async findAll(params: FindAllUsersDTO): Promise<FindReturnUserDTO[]> {
         const query = this.userEntity
             .createQueryBuilder('user_entity')
             .select([
