@@ -33,6 +33,7 @@ export class CreateUserUseCase {
             return user
         }
         catch(error){
+            if(error instanceof BadRequestException) throw error
             throw new HttpException(error.message ?? 'Não foi possível cadastrar o usuário', error.status ?? 500)
         }
     }

@@ -16,6 +16,7 @@ export class AbleUserUseCase {
             }
         }
         catch(error){
+            if(error instanceof BadRequestException) throw error
             throw new HttpException(error.message ?? 'Não foi possível habilitar o usuário', error.status ?? 500)
         }
     }

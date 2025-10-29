@@ -16,6 +16,7 @@ export class DisableUserUseCase {
             }
         }
         catch(error){
+            if(error instanceof BadRequestException) throw error
             throw new HttpException(error.message ?? 'Não foi possível desabilitar o usuário', error.status ?? 500)
         }
     }

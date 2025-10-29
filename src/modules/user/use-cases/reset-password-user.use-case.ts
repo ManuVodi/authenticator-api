@@ -36,6 +36,7 @@ export class ResetPasswordUserUseCase {
             }
         }
         catch(error){
+            if(error instanceof BadRequestException) throw error
             throw new HttpException(error.message ?? 'Não foi possível alterar a senha do usuário', error.status ?? 500)
         }
     }
